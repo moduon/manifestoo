@@ -15,6 +15,9 @@ try:
     import openerp as odoo
 except ImportError:
     import odoo
+    import odoo.addons
+    import odoo.release
+    import odoo.modules
 
 odoo.modules.initialize_sys_path()
 
