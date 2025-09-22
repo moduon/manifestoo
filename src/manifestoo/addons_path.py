@@ -55,18 +55,24 @@ class AddonsPath(List[Path]):
             try:
                 output.close()
                 try:
-                    r = subprocess.call(
+                    result = subprocess.run(
                         [python, script.name, output.name],
-                        stderr=subprocess.DEVNULL,
-                        stdout=subprocess.DEVNULL,
                         env=os.environ,
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.STDOUT,
+                        text=True,
                     )
                 except FileNotFoundError:
-                    # python not found
-                    r = 1
-                if r != 0:
                     echo.notice(f"could not obtain odoo.addons.__path__ using {python}")
+                    echo.info(f"{python} executable not found")
                     return
+                else:
+                    if result.returncode != 0:
+                        echo.notice(
+                            f"could not obtain odoo.addons.__path__ using {python}"
+                        )
+                        echo.info(result.stdout, nl=False)
+                        return
                 addons_paths = ast.literal_eval(Path(output.name).read_text())
                 self.extend(Path(item) for item in addons_paths)
             finally:
