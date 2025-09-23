@@ -6,7 +6,7 @@ The `--select-*` options of this command select addons on which the
 subcommands will act. The `--addons-path` options provide locations to
 search for addons.
 
-Run `manifestoo <subcommand> --help` for more options.
+Run `manifestoo &lt;subcommand&gt; --help` for more options.
 
 **Usage**:
 
@@ -26,7 +26,7 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 * `--addons-path-from-import-odoo / --no-addons-path-from-import-odoo`: Expand addons path by trying to `import odoo` and looking at `odoo.addons.__path__`. This option is useful when addons have been installed with pip.  [default: addons-path-from-import-odoo]
 * `--addons-path-python PYTHON`: The python executable to use when importing `odoo.addons.__path__`. Defaults to the `python` executable found in PATH.
 * `--addons-path-from-odoo-cfg FILE`: Expand addons path by looking into the provided Odoo configuration file.   [env var: ODOO_RC]
-* `--odoo-series [8.0|9.0|10.0|11.0|12.0|13.0|14.0|15.0|16.0|17.0]`: Odoo series to use, in case it is not autodetected from addons version.  [env var: ODOO_VERSION, ODOO_SERIES]
+* `--odoo-series [8.0|9.0|10.0|11.0|12.0|13.0|14.0|15.0|16.0|17.0|18.0|19.0]`: Odoo series to use, in case it is not autodetected from addons version.  [env var: ODOO_VERSION, ODOO_SERIES]
 * `-v, --verbose`
 * `-q, --quiet`
 * `--version`
@@ -36,51 +36,14 @@ $ manifestoo [OPTIONS] COMMAND [ARGS]...
 
 **Commands**:
 
-* `check-dev-status`: Check development status compatibility.
-* `check-licenses`: Check license compatibility.
 * `list`: Print the selected addons.
-* `list-codepends`: Print the co-dependencies of selected addons.
 * `list-depends`: Print the dependencies of selected addons.
+* `list-codepends`: Print the co-dependencies of selected addons.
 * `list-external-dependencies`: Print the external dependencies of...
 * `list-missing`: Print the missing dependencies of selected...
+* `check-licenses`: Check license compatibility.
+* `check-dev-status`: Check development status compatibility.
 * `tree`: Print the dependency tree of selected addons.
-
-## `manifestoo check-dev-status`
-
-Check development status compatibility.
-
-Check that selected addons only depend on addons that have an equal
-or higher development status.
-
-**Usage**:
-
-```console
-$ manifestoo check-dev-status [OPTIONS]
-```
-
-**Options**:
-
-* `--transitive`: Also check transitive dependencies.
-* `--default-dev-status TEXT`
-* `--help`: Show this message and exit.
-
-## `manifestoo check-licenses`
-
-Check license compatibility.
-
-Check that selected addons only depend on addons with compatible
-licenses.
-
-**Usage**:
-
-```console
-$ manifestoo check-licenses [OPTIONS]
-```
-
-**Options**:
-
-* `--transitive`: Also check transitive dependencies.
-* `--help`: Show this message and exit.
 
 ## `manifestoo list`
 
@@ -95,7 +58,27 @@ $ manifestoo list [OPTIONS]
 **Options**:
 
 * `--separator TEXT`: Separator character to use (by default, print one item per line).
-* `--sort TEXT`: Choice between 'alphabetical' and 'topological'. Topological sorting is useful when seeking a migration order.  [default: alphabetical]
+* `--sort TEXT`: Choice between &#x27;alphabetical&#x27; and &#x27;topological&#x27;. Topological sorting is useful when seeking a migration order.  [default: alphabetical]
+* `--help`: Show this message and exit.
+
+## `manifestoo list-depends`
+
+Print the dependencies of selected addons.
+
+**Usage**:
+
+```console
+$ manifestoo list-depends [OPTIONS]
+```
+
+**Options**:
+
+* `--separator TEXT`: Separator character to use (by default, print one item per line).
+* `--transitive`: Print all transitive dependencies.
+* `--include-selected`: Print the selected addons along with their dependencies.
+* `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and transitive dependencies.
+* `--as-pip-requirements`
+* `--sort TEXT`: Choice between &#x27;alphabetical&#x27; and &#x27;topological&#x27;. Topological sorting is useful when seeking a migration order.  [default: alphabetical]
 * `--help`: Show this message and exit.
 
 ## `manifestoo list-codepends`
@@ -116,27 +99,7 @@ $ manifestoo list-codepends [OPTIONS]
 * `--separator TEXT`: Separator character to use (by default, print one item per line).
 * `--transitive / --no-transitive`: Print all transitive co-dependencies.  [default: transitive]
 * `--include-selected / --no-include-selected`: Print the selected addons along with their co-dependencies.  [default: include-selected]
-* `--sort TEXT`: Choice between 'alphabetical' and 'topological'. Topological sorting is useful when seeking a migration order.  [default: alphabetical]
-* `--help`: Show this message and exit.
-
-## `manifestoo list-depends`
-
-Print the dependencies of selected addons.
-
-**Usage**:
-
-```console
-$ manifestoo list-depends [OPTIONS]
-```
-
-**Options**:
-
-* `--separator TEXT`: Separator character to use (by default, print one item per line).
-* `--transitive`: Print all transitive dependencies.
-* `--include-selected`: Print the selected addons along with their dependencies.
-* `--ignore-missing`: Do not fail if dependencies are not found in addons path. This only applies to top level (selected) addons and transitive dependencies.
-* `--as-pip-requirements`
-* `--sort TEXT`: Choice between 'alphabetical' and 'topological'. Topological sorting is useful when seeking a migration order.  [default: alphabetical]
+* `--sort TEXT`: Choice between &#x27;alphabetical&#x27; and &#x27;topological&#x27;. Topological sorting is useful when seeking a migration order.  [default: alphabetical]
 * `--help`: Show this message and exit.
 
 ## `manifestoo list-external-dependencies`
@@ -173,6 +136,43 @@ $ manifestoo list-missing [OPTIONS]
 **Options**:
 
 * `--separator TEXT`: Separator character to use (by default, print one item per line).
+* `--help`: Show this message and exit.
+
+## `manifestoo check-licenses`
+
+Check license compatibility.
+
+Check that selected addons only depend on addons with compatible
+licenses.
+
+**Usage**:
+
+```console
+$ manifestoo check-licenses [OPTIONS]
+```
+
+**Options**:
+
+* `--transitive`: Also check transitive dependencies.
+* `--help`: Show this message and exit.
+
+## `manifestoo check-dev-status`
+
+Check development status compatibility.
+
+Check that selected addons only depend on addons that have an equal
+or higher development status.
+
+**Usage**:
+
+```console
+$ manifestoo check-dev-status [OPTIONS]
+```
+
+**Options**:
+
+* `--transitive`: Also check transitive dependencies.
+* `--default-dev-status TEXT`
 * `--help`: Show this message and exit.
 
 ## `manifestoo tree`
