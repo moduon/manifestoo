@@ -1,3 +1,15 @@
+1.1 (2025-09-23)
+================
+
+Features
+--------
+
+- Upgrade typer dependency. (`#69 <https://github.com/acsone/manifestoo/issues/69>`_)
+- Provide an info-level message (`-v`) with additional information about failing
+  addons path detection. It is useful to diagnose situations where `import odoo` fails. (`#73 <https://github.com/acsone/manifestoo/issues/73>`_)
+- Fix addons path auto detection with Odoo 19. (`#80 <https://github.com/acsone/manifestoo/issues/80>`_)
+
+
 1.0 (2024-07-13)
 ================
 
